@@ -1,0 +1,132 @@
+name: WET Visual Audit
+
+on:
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: |
+          npm init -y
+          npm install playwright
+          npx playwright install --with-deps chromium
+
+      - name: Create audit script
+        run: |
+          cat > audit.js <<'EOF'
+          const { chromium } = require('playwright');
+          const fs = require('fs');
+          const path = require('path');
+
+          const previewBase = 'https://nwzgnlod7f39pyhc-81320247583.shopifypreview.com';
+
+          const pages = [
+            { name: 'home', url: `${previewBase}/` },
+            { name: 'events', url: `${previewBase}/pages/events` },
+            { name: 'pricing-entry', url: `${previewBase}/pages/pricing-entry` },
+            { name: 'first-visit', url: `${previewBase}/pages/first-timers` },
+            { name: 'facilities', url: `${previewBase}/pages/gallery` },
+            { name: 'faq', url: `${previewBase}/pages/faq` },
+            { name: 'health-safety', url: `${previewBase}/pages/sexual-health-clinic` },
+            { name: 'contact', url: `${previewBase}/pages/contact` }
+          ];
+
+          const outDir = path.join(process.cwd(), 'artifacts');
+          fs.mkdirSync(outDir, { recursive: true });
+
+          (async () => {
+            const browser = await chromium.launch({ headless: true });
+
+            const results = [];
+
+            for (const viewport of [
+              { label: 'desktop', width: 1440, height: 2200 },
+              { label: 'mobile', width: 390, height: 1600 }
+            ]) {
+              const context = await browser.newContext({
+                viewport: { width: viewport.width, height: viewport.height }
+              });
+
+              for (const pageDef of pages) {
+                const page = await context.newPage();
+
+                const consoleErrors = [];
+                const pageErrors = [];
+                const failedRequests = [];
+
+                page.on('console', msg => {
+                  if (msg.type() === 'error') consoleErrors.push(msg.text());
+                });
+
+                page.on('pageerror', err => {
+                  pageErrors.push(String(err));
+                });
+
+                page.on('requestfailed', req => {
+                  failedRequests.push(`${req.method()} ${req.url()} :: ${req.failure()?.errorText || 'failed'}`);
+                });
+
+                await page.goto(pageDef.url, { waitUntil: 'networkidle', timeout: 120000 });
+
+                await page.screenshot({
+                  path: path.join(outDir, `${pageDef.name}-${viewport.label}.png`),
+                  fullPage: true
+                });
+
+                if (pageDef.name === 'home') {
+                  const headerButton = page.locator('header button, .site-nav button, .drawer-toggle').first();
+                  if (await headerButton.count()) {
+                    try {
+                      await headerButton.click({ timeout: 5000 });
+                      await page.waitForTimeout(1000);
+                      await page.screenshot({
+                        path: path.join(outDir, `home-${viewport.label}-menu-open.png`),
+                        fullPage: true
+                      });
+                    } catch {}
+                  }
+                }
+
+                results.push({
+                  page: pageDef.name,
+                  viewport: viewport.label,
+                  url: pageDef.url,
+                  consoleErrors,
+                  pageErrors,
+                  failedRequests
+                });
+
+                await page.close();
+              }
+
+              await context.close();
+            }
+
+            fs.writeFileSync(
+              path.join(outDir, 'audit-results.json'),
+              JSON.stringify(results, null, 2)
+            );
+
+            await browser.close();
+          })();
+          EOF
+
+      - name: Run audit
+        run: node audit.js
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: wet-visual-audit
+          path: artifacts
