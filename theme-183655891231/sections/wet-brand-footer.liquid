@@ -1,0 +1,49 @@
+<footer class="wet-footer">
+  <div class="wet-shell">
+    <section class="wet-footer__signup" aria-labelledby="WetNewsletterHeading-{{ section.id }}">
+      <div>
+        <p class="wet-kicker">WET updates</p>
+        <h2 id="WetNewsletterHeading-{{ section.id }}">Stay in the loop.</h2>
+        <p>Event announcements, weekly updates and important venue news. Every email is sent discreetly.</p>
+      </div>
+      <div>
+        {% form 'customer', id: 'WetNewsletter', class: 'wet-newsletter' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div class="wet-newsletter__row">
+            <label class="wet-sr-only" for="WetNewsletterEmail-{{ section.id }}">Email address</label>
+            <input id="WetNewsletterEmail-{{ section.id }}" type="email" name="contact[email]" value="{{ form.email }}" autocorrect="off" autocapitalize="off" autocomplete="email" placeholder="Your email address" required>
+            <button type="submit">Sign up ↗</button>
+          </div>
+          {% if form.posted_successfully? %}<p class="wet-newsletter__status" role="status">Thanks - you are subscribed.</p>{% endif %}
+          {% if form.errors %}<div class="wet-newsletter__status" role="alert">{{ form.errors | default_errors }}</div>{% endif %}
+        {% endform %}
+        <p>Marketing consent is separate from future WET Rewards participation. Unsubscribe at any time.</p>
+      </div>
+    </section>
+    <div class="wet-footer__main">
+      <div class="wet-footer__brand">
+        {% if section.settings.logo != blank %}
+          {{ section.settings.logo | image_url: width: 700 | image_tag: widths: '280, 440, 700', width: 220, loading: 'lazy', alt: 'WET Spa and Sauna' }}
+        {% endif %}
+        <p>Brisbane's established men's spa, sauna and social venue. Bold, welcoming, discreet and unapologetically adult.</p>
+        <div class="wet-actions"><a class="wet-button" href="/pages/pricing-entry">Plan your visit</a><a class="wet-button wet-button--outline" href="/pages/contact">Directions</a></div>
+      </div>
+      <nav class="wet-footer__column" aria-label="Footer navigation">
+        <h3>Explore</h3>
+        <a href="/pages/events">Events</a><a href="/pages/gallery">Facilities</a><a href="/pages/first-timers">First visit</a><a href="/pages/food-drink">Food &amp; drink</a><a href="/pages/pricing-entry">Pricing &amp; entry</a><a href="/pages/faq">FAQ</a><a href="/pages/sexual-health-clinic">Health &amp; safety</a>
+      </nav>
+      <div class="wet-footer__column">
+        <h3>Visit</h3>
+        <p>22 Jeays Street<br>Bowen Hills QLD 4006</p>
+        <a href="tel:+61738541383">07 3854 1383</a><a href="mailto:wetspa@wet.com.au">wetspa@wet.com.au</a>
+        <p>Mon-Thu 11am-11pm<br>Fri-Sat 11am-2am<br>Sun 11am-11pm</p>
+      </div>
+    </div>
+    <div class="wet-footer__bottom"><span>© {{ 'now' | date: '%Y' }} WET Spa &amp; Sauna</span><span>Adults 18+ - physical photo ID required</span><span>Card transactions appear as Bowen Hills Gym</span></div>
+  </div>
+  <span class="wet-curve wet-curve--red" aria-hidden="true"></span>
+</footer>
+
+{% schema %}
+{"name":"WET brand footer","settings":[{"type":"image_picker","id":"logo","label":"Logo"}]}
+{% endschema %}
