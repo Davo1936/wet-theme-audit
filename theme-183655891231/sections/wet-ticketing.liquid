@@ -1,0 +1,46 @@
+{% if section.settings.enabled and section.settings.embed_code != blank %}
+  <section class="wet-ticketing wet-section" id="tickets" data-wet-ticketing-ready>
+    <div class="wet-shell">
+      <div class="wet-section__head">
+        <div>
+          <p class="wet-kicker">Secure online booking</p>
+          <h2 class="wet-title wet-title--small">{{ section.settings.heading | escape }}</h2>
+        </div>
+        <div class="wet-section__aside">
+          <p class="wet-copy">{{ section.settings.intro | escape }}</p>
+        </div>
+      </div>
+      <div class="wet-ticketing__frame">
+        {{ section.settings.embed_code }}
+      </div>
+      <div class="wet-ticketing__notes" aria-label="Ticket purchase information">
+        <p><strong>Booking fees</strong>{{ section.settings.fee_note | escape }}</p>
+        <p><strong>Check-in</strong>Tickets are delivered by email with a QR code for scanning at the door.</p>
+        <p><strong>Regular nights</strong>Weekly Sunday, Tuesday and Friday events remain walk-in unless otherwise advertised.</p>
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+{% stylesheet %}
+.wet-ticketing{background:linear-gradient(180deg,var(--wet-charcoal),var(--wet-black))}
+.wet-ticketing__frame{min-height:260px;margin-top:54px;padding:clamp(22px,4vw,48px);border:1px solid var(--wet-line);background:#fff;color:#111}
+.wet-ticketing__notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--wet-line);border-top:0}
+.wet-ticketing__notes p{display:grid;align-content:start;gap:10px;min-width:0;padding:26px;border-right:1px solid var(--wet-line);color:var(--wet-muted);font-size:12px;line-height:1.55}
+.wet-ticketing__notes p:last-child{border-right:0}
+.wet-ticketing__notes strong{color:var(--wet-white);font-size:10px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+@media(max-width:800px){.wet-ticketing__frame{margin-top:36px;padding:14px}.wet-ticketing__notes{grid-template-columns:1fr}.wet-ticketing__notes p{border-right:0;border-bottom:1px solid var(--wet-line)}.wet-ticketing__notes p:last-child{border-bottom:0}}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "WET SimpleTix tickets",
+  "settings": [
+    {"type":"checkbox","id":"enabled","label":"Show SimpleTix ticketing","default":false},
+    {"type":"text","id":"heading","label":"Heading","default":"Tickets on sale."},
+    {"type":"textarea","id":"intro","label":"Introduction","default":"Choose an event and ticket type below. Availability and sold-out status update from the live event allocation."},
+    {"type":"liquid","id":"embed_code","label":"SimpleTix embed code"},
+    {"type":"text","id":"fee_note","label":"Fee note","default":"The customer pays the SimpleTix booking fee. WET absorbs Square processing fees."}
+  ]
+}
+{% endschema %}

@@ -13,7 +13,11 @@ It includes:
 - Homepage, visit, events, facilities, first visit, food and drink, FAQ, health and contact journeys
 - Shopify-connected customer email signup
 - Current SPLASH Eventbrite ticket link
+- Hidden-until-connected SimpleTix event-list and checkout module
+- Square payment, fee and QR check-in handoff for future ticketed events
 - Weekly Sunday, Tuesday and Friday programming
 - Mobile navigation, responsive layouts and reduced-motion handling
 
 The live Shopify theme is not targeted by these files and must not be published without explicit approval.
+
+See `TICKETING_HANDOFF.md` for the merchant-authorised SimpleTix and Square activation steps.
