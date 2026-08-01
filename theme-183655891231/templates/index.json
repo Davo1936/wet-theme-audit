@@ -1,1 +1,1 @@
-{"sections":{"main":{"type":"wet-brand-home","settings":{}}},"order":["main"]}
+{"sections":{"main":{"type":"wet-brand-home","settings":{}},"staff_voices":{"type":"wet-staff-voices","settings":{"mode":"teaser","max_items":3,"show_archive_link":true}}},"order":["main","staff_voices"]}
