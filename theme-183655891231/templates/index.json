@@ -1,1 +1,1 @@
-{"sections":{"main":{"type":"wet-brand-home","settings":{}},"staff_voices":{"type":"wet-staff-voices","settings":{"mode":"teaser","max_items":3,"show_archive_link":true}}},"order":["main","staff_voices"]}
+{"sections":{"main":{"type":"wet-brand-home","settings":{}},"google_reviews":{"type":"wet-google-reviews","settings":{"minimum_rating":"4","rotation_seconds":8}},"staff_voices":{"type":"wet-staff-voices","settings":{"mode":"teaser","max_items":3,"show_archive_link":true}}},"order":["main","google_reviews","staff_voices"]}
