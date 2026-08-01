@@ -1,4 +1,4 @@
-<section class="wgr" id="WetGoogleReviews-{{ section.id }}" data-wet-google-reviews data-api-key="{{ section.settings.google_maps_api_key | escape }}" data-place-id="{{ section.settings.google_place_id | escape }}" data-min-rating="{{ section.settings.minimum_rating }}" data-interval="{{ section.settings.rotation_seconds | times: 1000 }}">
+<section class="wgr" id="WetGoogleReviews-{{ section.id }}" data-wet-google-reviews data-api-key="{{ section.settings.google_maps_api_key | escape }}" data-place-id="{{ section.settings.google_place_id | escape }}" data-interval="{{ section.settings.rotation_seconds | times: 1000 }}">
   <div class="wgr__shell">
     <header class="wgr__header">
       <div>
@@ -150,8 +150,7 @@
     }
     const place = new Place({ id: placeId });
     await place.fetchFields({ fields: ['displayName', 'rating', 'userRatingCount', 'reviews'] });
-    const minimumRating = Number(root.dataset.minRating) || 4;
-    const reviews = (place.reviews || []).filter((review) => review.text && Number(review.rating) >= minimumRating);
+    const reviews = (place.reviews || []).filter((review) => review.text && Number(review.rating) === 5);
     if (!reviews.length) return;
     root.querySelector('[data-review-track]').replaceChildren(...reviews.map(buildReview));
     const summary = root.querySelector('[data-review-summary]');
@@ -173,5 +172,5 @@
 {% endjavascript %}
 
 {% schema %}
-{"name":"WET Google reviews","settings":[{"type":"text","id":"google_maps_api_key","label":"Google Maps API key","info":"Use a browser key restricted to wet.com.au with Places API (New) enabled."},{"type":"text","id":"google_place_id","label":"Google Place ID","info":"Optional. WET is found automatically when this is blank."},{"type":"select","id":"minimum_rating","label":"Minimum review rating","options":[{"value":"4","label":"4 stars"},{"value":"5","label":"5 stars"}],"default":"4"},{"type":"range","id":"rotation_seconds","label":"Seconds between reviews","min":5,"max":15,"step":1,"unit":"sec","default":8}],"presets":[{"name":"WET Google reviews"}]}
+{"name":"WET Google reviews","settings":[{"type":"text","id":"google_maps_api_key","label":"Google Maps API key","info":"Use a browser key restricted to wet.com.au with Places API (New) enabled."},{"type":"text","id":"google_place_id","label":"Google Place ID","info":"Optional. WET is found automatically when this is blank."},{"type":"range","id":"rotation_seconds","label":"Seconds between reviews","min":5,"max":15,"step":1,"unit":"sec","default":8}],"presets":[{"name":"WET Google reviews"}]}
 {% endschema %}
