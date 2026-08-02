@@ -9,44 +9,47 @@
     </div>
   </section>
 
-  <div class="wet-shell">
-    <section class="wet-footer__signup" aria-labelledby="WetNewsletterHeading-{{ section.id }}">
-      <div>
-        <p class="wet-kicker">WET updates</p>
-        <h2 id="WetNewsletterHeading-{{ section.id }}">Stay in the loop.</h2>
-        <p>Event announcements, weekly updates and important venue news. Every email is sent discreetly.</p>
-      </div>
-      <div>
-        {% form 'customer', id: 'WetNewsletter', class: 'wet-newsletter' %}
-          <input type="hidden" name="contact[tags]" value="newsletter">
-          <div class="wet-newsletter__row">
-            <label class="wet-sr-only" for="WetNewsletterEmail-{{ section.id }}">Email address</label>
-            <input id="WetNewsletterEmail-{{ section.id }}" type="email" name="contact[email]" value="{{ form.email }}" autocorrect="off" autocapitalize="off" autocomplete="email" placeholder="Your email address" required>
-            <button type="submit">Sign up ↗</button>
-          </div>
-          {% if form.posted_successfully? %}<p class="wet-newsletter__status" role="status">Thanks - you are subscribed.</p>{% endif %}
-          {% if form.errors %}<div class="wet-newsletter__status" role="alert">{{ form.errors | default_errors }}</div>{% endif %}
-        {% endform %}
-        <p>Marketing consent is separate from future WET Rewards participation. Unsubscribe at any time.</p>
-      </div>
-    </section>
+  <div class="wet-footer__lower">
+    <div class="wet-shell">
+      <section class="wet-footer__signup" aria-labelledby="WetNewsletterHeading-{{ section.id }}">
+        <div class="wet-footer__signup-copy">
+          <p class="wet-kicker">WET updates</p>
+          <h2 id="WetNewsletterHeading-{{ section.id }}">Stay in the loop.</h2>
+          <p>Events, weekly updates and important venue news—always sent discreetly.</p>
+        </div>
+        <div class="wet-footer__signup-form">
+          {% form 'customer', id: 'WetNewsletter', class: 'wet-newsletter' %}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <div class="wet-newsletter__row">
+              <label class="wet-sr-only" for="WetNewsletterEmail-{{ section.id }}">Email address</label>
+              <input id="WetNewsletterEmail-{{ section.id }}" type="email" name="contact[email]" value="{{ form.email }}" autocorrect="off" autocapitalize="off" autocomplete="email" placeholder="Your email address" required>
+              <button type="submit">Sign up ↗</button>
+            </div>
+            {% if form.posted_successfully? %}<p class="wet-newsletter__status" role="status">Thanks - you are subscribed.</p>{% endif %}
+            {% if form.errors %}<div class="wet-newsletter__status" role="alert">{{ form.errors | default_errors }}</div>{% endif %}
+          {% endform %}
+          <p>Marketing consent is separate from future WET Rewards participation. Unsubscribe at any time.</p>
+        </div>
+      </section>
 
-    <div class="wet-footer__bottom">
-      <span>© {{ 'now' | date: '%Y' }} WET Spa &amp; Sauna</span>
-      <span>Adults 18+ - physical photo ID required</span>
-      <span>Card transactions appear as Bowen Hills Gym</span>
-      <a class="wet-footer__credit" href="https://martinenterprises.tech" target="_blank" rel="noopener noreferrer">Powered by Martin Tech Enterprises</a>
+      <div class="wet-footer__bottom">
+        <span>© {{ 'now' | date: '%Y' }} WET Spa &amp; Sauna</span>
+        <span>Adults 18+ - physical photo ID required</span>
+        <span>Card transactions appear as Bowen Hills Gym</span>
+        <a class="wet-footer__credit" href="https://martinenterprises.tech" target="_blank" rel="noopener noreferrer">Powered by Martin Tech Enterprises</a>
+      </div>
     </div>
   </div>
   <span class="wet-curve wet-curve--red" aria-hidden="true"></span>
 </footer>
 
 {% stylesheet %}
-.wet-footer__visit{position:relative;isolation:isolate;overflow:hidden;border-bottom:1px solid var(--wet-line);background:linear-gradient(102deg,#050506 0%,#170609 50%,#050506 100%)}
+.wet-footer__visit{position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(102deg,#050506 0%,#170609 50%,#050506 100%)}
 .wet-footer__visit-texture{position:absolute;z-index:-1;inset:0;opacity:.45;background:repeating-linear-gradient(100deg,transparent 0 3px,rgba(215,17,42,.07) 4px,transparent 7px),radial-gradient(ellipse at 50% 115%,rgba(215,17,42,.3),transparent 60%)}
 .wet-footer__visit:before,.wet-footer__visit:after{content:"";position:absolute;z-index:-1;right:-8%;left:-8%;height:100px;border-radius:50%;pointer-events:none}.wet-footer__visit:before{bottom:-82px;border-top:4px solid var(--wet-red);transform:rotate(-1.5deg)}.wet-footer__visit:after{bottom:-91px;border-top:1px solid rgba(196,199,204,.55);transform:rotate(-1deg)}
-.wet-footer__visit-inner{display:grid;justify-items:center;padding-block:clamp(62px,8vw,108px);text-align:center}.wet-footer__visit-inner>img{width:clamp(150px,17vw,230px);height:auto;margin:0 0 22px}.wet-footer__visit h2{margin:0 0 12px;font-family:var(--wet-display);font-size:clamp(48px,5.5vw,82px);font-weight:900;letter-spacing:-.04em;line-height:.84;text-transform:uppercase}.wet-footer__visit p{margin:0 0 30px;color:var(--wet-silver);font-size:11px;font-weight:900;letter-spacing:.12em;line-height:1.7;text-transform:uppercase}.wet-footer__visit p span{margin:0 13px;color:var(--wet-red)}.wet-footer__visit .wet-button{min-width:270px}.wet-footer__visit .wet-button span{margin-left:18px;font-size:20px}.wet-footer__signup{border-bottom:0}.wet-footer__bottom{position:relative;z-index:2}
-@media(max-width:800px){.wet-footer__visit-inner>img{width:170px}.wet-footer__visit p{max-width:330px}.wet-footer__visit p span{margin-inline:6px}.wet-footer__visit .wet-button{min-width:0}.wet-footer__signup{padding-bottom:72px}.wet-footer__bottom{padding-bottom:58px}}
+.wet-footer__visit-inner{display:grid;justify-items:center;padding-block:clamp(62px,8vw,108px);text-align:center}.wet-footer__visit-inner>img{width:clamp(150px,17vw,230px);height:auto;margin:0 0 22px}.wet-footer__visit h2{margin:0 0 12px;font-family:var(--wet-display);font-size:clamp(48px,5.5vw,82px);font-weight:900;letter-spacing:-.04em;line-height:.84;text-transform:uppercase}.wet-footer__visit p{margin:0 0 30px;color:var(--wet-silver);font-size:11px;font-weight:900;letter-spacing:.12em;line-height:1.7;text-transform:uppercase}.wet-footer__visit p span{margin:0 13px;color:var(--wet-red)}.wet-footer__visit .wet-button{min-width:270px}.wet-footer__visit .wet-button span{margin-left:18px;font-size:20px}
+.wet-footer__lower{position:relative;background:radial-gradient(ellipse at 50% 0,rgba(101,13,24,.2),transparent 48%),linear-gradient(180deg,#090405 0,#030304 58%)}.wet-footer__lower .wet-footer__signup{grid-template-columns:minmax(360px,.85fr) minmax(420px,1.15fr);gap:clamp(42px,6vw,88px);align-items:center;padding-block:34px 30px;border-bottom:0}.wet-footer__lower .wet-footer__signup .wet-kicker{margin:0}.wet-footer__lower .wet-footer__signup h2{margin:8px 0 0;font-size:clamp(32px,3vw,42px);line-height:.92;white-space:nowrap}.wet-footer__lower .wet-footer__signup p{margin:8px 0 0;font-size:12px;line-height:1.5}.wet-footer__signup-form{align-self:center}.wet-footer__lower .wet-newsletter input,.wet-footer__lower .wet-newsletter button{min-height:52px}.wet-footer__bottom{position:relative;z-index:2}
+@media(max-width:800px){.wet-footer__visit-inner{padding-block:58px 72px}.wet-footer__visit-inner>img{width:160px}.wet-footer__visit p{max-width:330px}.wet-footer__visit p span{margin-inline:6px}.wet-footer__visit .wet-button{min-width:0}.wet-footer__lower .wet-footer__signup{grid-template-columns:1fr;gap:22px;padding-block:34px 30px}.wet-footer__lower .wet-footer__signup h2{font-size:34px;white-space:normal}.wet-footer__lower .wet-footer__signup p{max-width:360px}.wet-footer__lower .wet-newsletter__row{grid-template-columns:minmax(0,1fr) auto}.wet-footer__lower .wet-newsletter button{justify-self:auto;padding:0 0 0 14px}.wet-footer__lower .wet-footer__bottom{gap:12px;padding-bottom:42px}}
 {% endstylesheet %}
 
 {% schema %}
