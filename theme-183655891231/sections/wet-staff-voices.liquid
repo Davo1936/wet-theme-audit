@@ -1,7 +1,15 @@
 {% liquid
   assign wet_staff_voices = metaobjects.wet_staff_voice.values
   assign wet_staff_shown = 0
+  assign wet_additional_staff = 0
   assign wet_staff_limit = section.settings.max_items | default: 3
+
+  for voice in wet_staff_voices
+    assign wet_voice_handle = voice.title.value | handleize
+    unless wet_voice_handle == 'why-respect-matters'
+      assign wet_additional_staff = wet_additional_staff | plus: 1
+    endunless
+  endfor
 %}
 
 {% if section.settings.mode == 'archive' %}
@@ -77,7 +85,7 @@
         </div>
       </section>
 
-      <section class="wet-team-respect" aria-labelledby="WetRespectHeading-{{ section.id }}" data-wet-reveal>
+      <section class="wet-team-respect{% if wet_additional_staff > 0 %} wet-team-respect--with-comments{% endif %}" aria-labelledby="WetRespectHeading-{{ section.id }}" data-wet-reveal>
         <div class="wet-team-respect__art" aria-hidden="true">
           <svg viewBox="0 0 180 180">
             <circle cx="90" cy="90" r="70" opacity=".28"/>
@@ -92,6 +100,37 @@
           <p>If behaviour affects the comfort or safety of others, our team will step in to help maintain a positive experience for everyone.</p>
         </div>
       </section>
+
+      {% if wet_additional_staff > 0 %}
+        <section class="wet-team-comments" aria-label="More from the WET team">
+          {% for voice in wet_staff_voices %}
+            {% assign wet_voice_handle = voice.title.value | handleize %}
+            {% unless wet_voice_handle == 'why-respect-matters' %}
+              <article class="wet-team-comment" data-wet-reveal>
+                <div class="wet-team-comment__visual" aria-hidden="true">
+                  {% if voice.photo.value != blank %}
+                    {{ voice.photo.value | image_url: width: 900 | image_tag: widths: '360, 540, 720, 900', loading: 'lazy', alt: '' }}
+                  {% else %}
+                    <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="46"/><path d="M37 46h32M37 60h46M37 74h38"/><path class="wet-team-comment__accent" d="M29 37c12-15 28-23 49-23M91 83c-13 15-29 23-49 23"/></svg>
+                  {% endif %}
+                </div>
+                <div class="wet-team-comment__content">
+                  <div class="wet-team-comment__meta">
+                    <span>{{ voice.topic.value }}</span>
+                    {% if voice.published_on.value != blank %}<time datetime="{{ voice.published_on.value }}">{{ voice.published_on.value | date: '%B %Y' }}</time>{% endif %}
+                  </div>
+                  <h2>{{ voice.title.value }}</h2>
+                  <blockquote>{{ voice.body.value | escape | newline_to_br }}</blockquote>
+                  <footer>
+                    <strong>{{ voice.staff_name.value }}</strong>
+                    {% if voice.role.value != blank %}<span>{{ voice.role.value }}</span>{% endif %}
+                  </footer>
+                </div>
+              </article>
+            {% endunless %}
+          {% endfor %}
+        </section>
+      {% endif %}
 
       <section class="wet-team-commitment" aria-labelledby="WetCommitmentHeading-{{ section.id }}">
         <div class="wet-team-commitment__badge" aria-hidden="true" data-wet-reveal>
@@ -110,54 +149,6 @@
         </ul>
       </section>
     </div>
-
-    {% if wet_staff_voices != blank %}
-      <section class="wet-team-voices" aria-labelledby="WetVoicesHeading-{{ section.id }}">
-        <div class="wet-shell">
-          <header class="wet-team-voices__header" data-wet-reveal>
-            <div>
-              <p class="wet-team-page__eyebrow"><span></span>Voices from the team</p>
-              <h2 id="WetVoicesHeading-{{ section.id }}">What our team wants you to know.</h2>
-            </div>
-            <p>Perspectives from the people who welcome patrons, care for the venue and shape the WET experience.</p>
-          </header>
-
-          <div class="wet-team-voices__grid">
-            {% for voice in wet_staff_voices %}
-              <article class="wet-team-voice{% if voice.photo.value == blank %} wet-team-voice--no-photo{% endif %}" data-wet-reveal>
-                {% if voice.photo.value != blank %}
-                  <div class="wet-team-voice__photo">
-                    {{ voice.photo.value | image_url: width: 900 | image_tag: widths: '360, 540, 720, 900', loading: 'lazy', alt: voice.staff_name.value }}
-                  </div>
-                {% endif %}
-                <div class="wet-team-voice__content">
-                  <div class="wet-team-voice__meta">
-                    <span>{{ voice.topic.value }}</span>
-                    {% if voice.published_on.value != blank %}<time datetime="{{ voice.published_on.value }}">{{ voice.published_on.value | date: '%B %Y' }}</time>{% endif %}
-                  </div>
-                  <h3>{{ voice.title.value }}</h3>
-                  <blockquote>{{ voice.body.value | escape | newline_to_br }}</blockquote>
-                  <footer>
-                    <strong>{{ voice.staff_name.value }}</strong>
-                    {% if voice.role.value != blank %}<span>{{ voice.role.value }}</span>{% endif %}
-                  </footer>
-                </div>
-              </article>
-            {% endfor %}
-          </div>
-        </div>
-      </section>
-    {% endif %}
-
-    <section class="wet-team-visit" aria-labelledby="WetVisitHeading-{{ section.id }}">
-      <div class="wet-team-visit__texture" aria-hidden="true"></div>
-      <div class="wet-shell wet-team-visit__inner" data-wet-reveal>
-        <img src="https://wet.com.au/cdn/shop/files/Logo_Transparent_Background_Socials.png?v=1696580697&amp;width=520" width="180" height="94" loading="lazy" alt="WET Spa and Sauna">
-        <h2 id="WetVisitHeading-{{ section.id }}">Plan your visit</h2>
-        <p>Come as you are. <span>•</span> Respect others. <span>•</span> Enjoy your time.</p>
-        <a class="wet-button" href="/pages/first-timers">Visitor information <span aria-hidden="true">→</span></a>
-      </div>
-    </section>
   </section>
 {% elsif wet_staff_voices != blank %}
   <section class="wet wet-staff-teaser" aria-labelledby="WetStaffHeading-{{ section.id }}">
@@ -209,14 +200,13 @@
 .wet-team-page__hero-art{position:relative;min-height:520px;isolation:isolate}.wet-team-page__brush{position:absolute;z-index:-1;background:linear-gradient(105deg,transparent 2%,#17181a 18%,#101113 75%,transparent 96%);filter:blur(.2px);transform:rotate(-8deg)}.wet-team-page__brush--one{inset:15% -6% 24% 0;clip-path:polygon(2% 35%,19% 22%,14% 7%,35% 18%,47% 0,53% 17%,77% 4%,70% 24%,100% 19%,83% 48%,98% 67%,73% 66%,82% 91%,54% 76%,38% 100%,32% 77%,7% 89%,18% 60%,0 53%)}.wet-team-page__brush--two{inset:29% 7% 9% -10%;opacity:.55;transform:rotate(9deg)}.wet-team-page__people-mark{position:absolute;top:20%;left:15%;width:70%;height:auto;color:var(--wet-red)}.wet-team-page__sweep{position:absolute;right:-2%;bottom:6%;width:90%;height:120px;color:var(--wet-red);transform:rotate(-5deg)}
 .wet-team-beliefs{padding:clamp(80px,10vw,140px) 0 clamp(70px,9vw,120px)}.wet-team-page__section-heading{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;margin-bottom:48px}.wet-team-page__section-heading h2{margin:0;font-family:var(--wet-display);font-size:clamp(25px,2.3vw,35px);font-weight:900;letter-spacing:.01em;text-transform:uppercase}.wet-team-page__section-heading span{height:1px;background:var(--wet-line)}
 .wet-team-beliefs__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}.wet-team-belief{position:relative;padding:0 clamp(24px,3vw,46px);text-align:center}.wet-team-belief:first-child{padding-left:0}.wet-team-belief:last-child{padding-right:0}.wet-team-belief+.wet-team-belief{border-left:1px solid var(--wet-line)}.wet-team-belief__icon{display:grid;width:86px;height:86px;margin:0 auto 30px;place-items:center;border-radius:50%;background:linear-gradient(145deg,#1b1c1f,#0c0d0f);box-shadow:inset 0 0 0 1px rgba(255,255,255,.025)}.wet-team-belief__icon svg{width:52px;height:52px;fill:none;stroke:var(--wet-red);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}.wet-team-belief h3{margin:0 0 14px;font-family:var(--wet-display);font-size:18px;font-weight:900;line-height:1.15;text-transform:uppercase}.wet-team-belief p{max-width:250px;margin:0 auto;color:rgba(246,243,238,.82);font-size:15px;line-height:1.55}
-.wet-team-respect{display:grid;grid-template-columns:minmax(240px,.34fr) minmax(0,.66fr);margin-bottom:clamp(65px,8vw,110px);border:1px solid rgba(196,199,204,.32);border-radius:14px;background:linear-gradient(125deg,rgba(255,255,255,.035),transparent 48%),#0a0a0b;overflow:hidden}.wet-team-respect__art{display:grid;min-height:320px;place-items:center;border-right:1px solid rgba(215,17,42,.42);background:radial-gradient(circle,rgba(215,17,42,.08),transparent 63%)}.wet-team-respect__art svg{width:min(74%,240px);fill:none;stroke:var(--wet-white);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}.wet-team-respect__art .wet-team-respect__accent{stroke:var(--wet-red)}.wet-team-respect__content{padding:clamp(42px,5vw,78px)}.wet-team-respect__content h2,.wet-team-commitment__copy h2{position:relative;margin:0 0 34px;font-family:var(--wet-display);font-size:clamp(31px,3vw,47px);font-weight:900;letter-spacing:-.025em;line-height:.9;text-transform:uppercase}.wet-team-respect__content h2:after,.wet-team-commitment__copy h2:after{content:"";position:absolute;left:0;bottom:-17px;width:43px;height:3px;background:var(--wet-red)}.wet-team-respect__content p{max-width:830px;margin:0 0 15px;color:rgba(246,243,238,.84);font-size:16px;line-height:1.55}
+.wet-team-respect{display:grid;grid-template-columns:minmax(240px,.34fr) minmax(0,.66fr);margin-bottom:clamp(65px,8vw,110px);border:1px solid rgba(196,199,204,.32);border-radius:14px;background:linear-gradient(125deg,rgba(255,255,255,.035),transparent 48%),#0a0a0b;overflow:hidden}.wet-team-respect--with-comments{margin-bottom:16px}.wet-team-respect__art{display:grid;min-height:320px;place-items:center;border-right:1px solid rgba(215,17,42,.42);background:radial-gradient(circle,rgba(215,17,42,.08),transparent 63%)}.wet-team-respect__art svg{width:min(74%,240px);fill:none;stroke:var(--wet-white);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}.wet-team-respect__art .wet-team-respect__accent{stroke:var(--wet-red)}.wet-team-respect__content{padding:clamp(42px,5vw,78px)}.wet-team-respect__content h2,.wet-team-comment__content h2,.wet-team-commitment__copy h2{position:relative;margin:0 0 34px;font-family:var(--wet-display);font-size:clamp(31px,3vw,47px);font-weight:900;letter-spacing:-.025em;line-height:.9;text-transform:uppercase}.wet-team-respect__content h2:after,.wet-team-comment__content h2:after,.wet-team-commitment__copy h2:after{content:"";position:absolute;left:0;bottom:-17px;width:43px;height:3px;background:var(--wet-red)}.wet-team-respect__content p{max-width:830px;margin:0 0 15px;color:rgba(246,243,238,.84);font-size:16px;line-height:1.55}
+.wet-team-comments{display:grid;gap:16px;margin-bottom:clamp(65px,8vw,110px)}.wet-team-comment{display:grid;grid-template-columns:minmax(240px,.34fr) minmax(0,.66fr);border:1px solid rgba(196,199,204,.25);border-radius:14px;background:#0a0a0b;overflow:hidden}.wet-team-comment__visual{display:grid;min-height:290px;place-items:center;border-right:1px solid rgba(215,17,42,.32);background:radial-gradient(circle,rgba(215,17,42,.08),transparent 63%);overflow:hidden}.wet-team-comment__visual>img{width:100%;height:100%;object-fit:cover;filter:saturate(.72) contrast(1.06)}.wet-team-comment__visual svg{width:min(66%,180px);fill:none;stroke:var(--wet-silver);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.wet-team-comment__visual .wet-team-comment__accent{stroke:var(--wet-red)}.wet-team-comment__content{padding:clamp(38px,5vw,70px)}.wet-team-comment__meta{display:flex;justify-content:space-between;gap:20px;margin-bottom:26px;color:var(--wet-silver);font-size:9px;font-weight:900;letter-spacing:.15em;text-transform:uppercase}.wet-team-comment blockquote{max-width:830px;margin:0;color:rgba(246,243,238,.84);font-family:var(--wet-serif);font-size:clamp(18px,1.6vw,24px);line-height:1.5}.wet-team-comment footer{display:flex;gap:10px;align-items:center;margin-top:28px;padding-top:18px;border-top:1px solid var(--wet-line);font-size:10px;letter-spacing:.12em;text-transform:uppercase}.wet-team-comment footer span{color:var(--wet-muted)}
 .wet-team-commitment{display:grid;grid-template-columns:110px minmax(0,1fr) minmax(280px,.46fr);gap:clamp(28px,4vw,62px);align-items:start;padding:0 8px clamp(80px,10vw,140px)}.wet-team-commitment__badge svg{width:90px;height:90px;fill:none;stroke:var(--wet-white);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.wet-team-commitment__copy p{max-width:620px;margin:0 0 16px;color:rgba(246,243,238,.82);font-size:16px;line-height:1.55}.wet-team-commitment__copy strong{display:block;color:var(--wet-red);font-size:18px}.wet-team-commitment__list{display:grid;gap:16px;margin:0;padding:14px 0 14px clamp(30px,4vw,58px);border-left:1px solid var(--wet-line);list-style:none}.wet-team-commitment__list li{position:relative;padding-left:29px;color:rgba(246,243,238,.9);font-size:16px}.wet-team-commitment__list li:before{content:"✓";position:absolute;left:0;color:var(--wet-red);font-weight:900}
-.wet-team-voices{padding:clamp(80px,10vw,145px) 0;background:var(--wet-panel);border-top:1px solid var(--wet-line)}.wet-team-voices__header,.wet-staff-teaser__header{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:clamp(40px,8vw,120px);align-items:end;margin-bottom:clamp(48px,7vw,90px)}.wet-team-voices__header h2{max-width:880px;margin:0;font-family:var(--wet-display);font-size:clamp(52px,7vw,104px);font-weight:900;letter-spacing:-.05em;line-height:.82;text-transform:uppercase}.wet-team-voices__header>p{max-width:460px;margin:0;color:var(--wet-muted);font-size:16px;line-height:1.6}
-.wet-team-voices__grid,.wet-staff-teaser__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.wet-team-voice{display:grid;grid-template-columns:minmax(0,.4fr) minmax(0,.6fr);min-height:480px;border:1px solid var(--wet-line);background:linear-gradient(135deg,rgba(215,17,42,.08),transparent 42%),var(--wet-black)}.wet-team-voice:only-child{grid-column:1/-1;grid-template-columns:minmax(300px,.34fr) minmax(0,.66fr)}.wet-team-voice.wet-team-voice--no-photo{grid-template-columns:1fr;min-height:auto}.wet-team-voice--no-photo .wet-team-voice__content{max-width:1020px}.wet-team-voice--no-photo blockquote{max-width:900px}.wet-team-voice__photo{min-height:100%;overflow:hidden;background:#111}.wet-team-voice__photo img{width:100%;height:100%;object-fit:cover;filter:saturate(.7) contrast(1.08)}.wet-team-voice__content{display:grid;align-content:start;padding:clamp(32px,4vw,60px)}.wet-team-voice__meta{display:flex;justify-content:space-between;gap:18px;margin-bottom:clamp(34px,4vw,54px);color:var(--wet-silver);font-size:9px;font-weight:900;letter-spacing:.15em;text-transform:uppercase}.wet-team-voice h3{margin:0;font-family:var(--wet-display);font-size:clamp(36px,4.2vw,62px);font-weight:900;letter-spacing:-.04em;line-height:.88;text-transform:uppercase}.wet-team-voice blockquote{margin:28px 0 0;color:rgba(246,243,238,.86);font-family:var(--wet-serif);font-size:clamp(19px,1.7vw,25px);line-height:1.45}.wet-team-voice footer{display:grid;gap:5px;margin-top:38px;padding-top:18px;border-top:1px solid var(--wet-line)}.wet-team-voice footer strong{font-size:11px;letter-spacing:.12em;text-transform:uppercase}.wet-team-voice footer span{color:var(--wet-muted);font-size:12px}
-.wet-team-visit{position:relative;overflow:hidden;border-top:1px solid var(--wet-line);background:linear-gradient(100deg,#080808 0%,#170609 52%,#090909 100%)}.wet-team-visit__texture{position:absolute;inset:0;opacity:.38;background:repeating-linear-gradient(100deg,transparent 0 3px,rgba(215,17,42,.08) 4px,transparent 6px),radial-gradient(ellipse at 50% 110%,rgba(215,17,42,.28),transparent 60%)}.wet-team-visit__inner{position:relative;z-index:1;display:grid;justify-items:center;padding:clamp(58px,7vw,92px) 0;text-align:center}.wet-team-visit__inner img{width:128px;height:auto;margin:0 0 22px;object-fit:contain}.wet-team-visit h2{margin:0 0 10px;font-family:var(--wet-display);font-size:clamp(42px,4.5vw,68px);font-weight:900;letter-spacing:-.035em;line-height:.88;text-transform:uppercase}.wet-team-visit p{margin:0 0 28px;color:var(--wet-silver);font-size:11px;font-weight:800;letter-spacing:.11em;text-transform:uppercase}.wet-team-visit p span{margin:0 13px;color:var(--wet-red)}.wet-team-visit .wet-button{min-width:260px}.wet-team-visit .wet-button span{margin-left:17px;font-size:20px}
+.wet-staff-teaser__header{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:clamp(40px,8vw,120px);align-items:end;margin-bottom:clamp(48px,7vw,90px)}.wet-staff-teaser__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.wet-team-voice{display:grid;grid-template-columns:minmax(0,.4fr) minmax(0,.6fr);min-height:480px;border:1px solid var(--wet-line);background:linear-gradient(135deg,rgba(215,17,42,.08),transparent 42%),var(--wet-black)}.wet-team-voice:only-child{grid-column:1/-1;grid-template-columns:minmax(300px,.34fr) minmax(0,.66fr)}.wet-team-voice.wet-team-voice--no-photo{grid-template-columns:1fr;min-height:auto}.wet-team-voice--no-photo .wet-team-voice__content{max-width:1020px}.wet-team-voice--no-photo blockquote{max-width:900px}.wet-team-voice__photo{min-height:100%;overflow:hidden;background:#111}.wet-team-voice__photo img{width:100%;height:100%;object-fit:cover;filter:saturate(.7) contrast(1.08)}.wet-team-voice__content{display:grid;align-content:start;padding:clamp(32px,4vw,60px)}.wet-team-voice__meta{display:flex;justify-content:space-between;gap:18px;margin-bottom:clamp(34px,4vw,54px);color:var(--wet-silver);font-size:9px;font-weight:900;letter-spacing:.15em;text-transform:uppercase}.wet-team-voice h3{margin:0;font-family:var(--wet-display);font-size:clamp(36px,4.2vw,62px);font-weight:900;letter-spacing:-.04em;line-height:.88;text-transform:uppercase}.wet-team-voice blockquote{margin:28px 0 0;color:rgba(246,243,238,.86);font-family:var(--wet-serif);font-size:clamp(19px,1.7vw,25px);line-height:1.45}.wet-team-voice footer{display:grid;gap:5px;margin-top:38px;padding-top:18px;border-top:1px solid var(--wet-line)}.wet-team-voice footer strong{font-size:11px;letter-spacing:.12em;text-transform:uppercase}.wet-team-voice footer span{color:var(--wet-muted);font-size:12px}
 .wet-staff-teaser{padding:clamp(90px,12vw,180px) 0;background:var(--wet-panel)}.wet-staff-teaser__actions{display:flex;justify-content:flex-end;margin-top:34px}
-@media(max-width:980px){.wet-team-page__hero-grid{grid-template-columns:1fr}.wet-team-page__hero-art{min-height:430px}.wet-team-page__people-mark{left:20%;width:60%}.wet-team-beliefs__grid{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:54px}.wet-team-belief:nth-child(3){border-left:0}.wet-team-respect{grid-template-columns:1fr}.wet-team-respect__art{min-height:260px;border-right:0;border-bottom:1px solid rgba(215,17,42,.42)}.wet-team-commitment{grid-template-columns:90px 1fr}.wet-team-commitment__list{grid-column:2}.wet-team-voices__header,.wet-staff-teaser__header{grid-template-columns:1fr}.wet-team-voice,.wet-team-voice:only-child{grid-template-columns:1fr}.wet-team-voice__photo{min-height:400px}}
-@media(max-width:760px){.wet-team-page__hero{padding-top:145px}.wet-team-page__hero-grid{gap:28px}.wet-team-page__intro h1{font-size:clamp(58px,18vw,82px)}.wet-team-page__promise{margin-top:24px}.wet-team-page__hero-art{min-height:300px}.wet-team-page__people-mark{top:5%;left:14%;width:72%}.wet-team-page__sweep{bottom:0;width:100%}.wet-team-beliefs__grid{grid-template-columns:1fr}.wet-team-belief,.wet-team-belief:first-child,.wet-team-belief:last-child{padding:0 0 42px}.wet-team-belief+.wet-team-belief{padding-top:42px;border-top:1px solid var(--wet-line);border-left:0}.wet-team-belief__icon{margin-bottom:23px}.wet-team-belief p{max-width:320px}.wet-team-respect{border-radius:9px}.wet-team-respect__art{min-height:220px}.wet-team-respect__content{padding:36px 25px}.wet-team-commitment{grid-template-columns:1fr;padding-inline:0}.wet-team-commitment__badge svg{width:78px;height:78px}.wet-team-commitment__list{grid-column:1;padding:28px 0 0;border-top:1px solid var(--wet-line);border-left:0}.wet-team-voices__grid,.wet-staff-teaser__grid{grid-template-columns:1fr}.wet-team-voice:only-child{grid-column:auto}.wet-team-voice__photo{min-height:340px}.wet-team-voices__header h2{font-size:52px}.wet-team-visit p{max-width:320px;line-height:1.8}.wet-team-visit p span{margin:0 6px}.wet-staff-teaser__actions{justify-content:stretch}.wet-staff-teaser__actions .wet-button{width:100%}}
+@media(max-width:980px){.wet-team-page__hero-grid{grid-template-columns:1fr}.wet-team-page__hero-art{min-height:430px}.wet-team-page__people-mark{left:20%;width:60%}.wet-team-beliefs__grid{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:54px}.wet-team-belief:nth-child(3){border-left:0}.wet-team-respect,.wet-team-comment{grid-template-columns:1fr}.wet-team-respect__art,.wet-team-comment__visual{min-height:260px;border-right:0;border-bottom:1px solid rgba(215,17,42,.42)}.wet-team-commitment{grid-template-columns:90px 1fr}.wet-team-commitment__list{grid-column:2}.wet-staff-teaser__header{grid-template-columns:1fr}.wet-team-voice,.wet-team-voice:only-child{grid-template-columns:1fr}.wet-team-voice__photo{min-height:400px}}
+@media(max-width:760px){.wet-team-page__hero{padding-top:145px}.wet-team-page__hero-grid{gap:28px}.wet-team-page__intro h1{font-size:clamp(58px,18vw,82px)}.wet-team-page__promise{margin-top:24px}.wet-team-page__hero-art{min-height:300px}.wet-team-page__people-mark{top:5%;left:14%;width:72%}.wet-team-page__sweep{bottom:0;width:100%}.wet-team-beliefs__grid{grid-template-columns:1fr}.wet-team-belief,.wet-team-belief:first-child,.wet-team-belief:last-child{padding:0 0 42px}.wet-team-belief+.wet-team-belief{padding-top:42px;border-top:1px solid var(--wet-line);border-left:0}.wet-team-belief__icon{margin-bottom:23px}.wet-team-belief p{max-width:320px}.wet-team-respect,.wet-team-comment{border-radius:9px}.wet-team-respect__art,.wet-team-comment__visual{min-height:220px}.wet-team-respect__content,.wet-team-comment__content{padding:36px 25px}.wet-team-comment__meta{display:grid;gap:7px}.wet-team-commitment{grid-template-columns:1fr;padding-inline:0}.wet-team-commitment__badge svg{width:78px;height:78px}.wet-team-commitment__list{grid-column:1;padding:28px 0 0;border-top:1px solid var(--wet-line);border-left:0}.wet-staff-teaser__grid{grid-template-columns:1fr}.wet-team-voice:only-child{grid-column:auto}.wet-team-voice__photo{min-height:340px}.wet-staff-teaser__actions{justify-content:stretch}.wet-staff-teaser__actions .wet-button{width:100%}}
 @media(prefers-reduced-motion:reduce){.wet-team-page__sweep{transform:none}}
 {% endstylesheet %}
 

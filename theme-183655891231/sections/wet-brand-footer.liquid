@@ -1,4 +1,14 @@
 <footer class="wet-footer">
+  <section class="wet-footer__visit" aria-labelledby="WetFooterVisitHeading-{{ section.id }}">
+    <div class="wet-footer__visit-texture" aria-hidden="true"></div>
+    <div class="wet-shell wet-footer__visit-inner" data-wet-reveal>
+      <img src="{{ 'wet-pictorial-mark.png' | asset_url }}" width="752" height="172" loading="lazy" alt="WET pictorial mark">
+      <h2 id="WetFooterVisitHeading-{{ section.id }}">Plan your visit</h2>
+      <p>Come as you are. <span>•</span> Respect others. <span>•</span> Enjoy your time.</p>
+      <a class="wet-button" href="/pages/first-timers">Visitor information <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
   <div class="wet-shell">
     <section class="wet-footer__signup" aria-labelledby="WetNewsletterHeading-{{ section.id }}">
       <div>
@@ -20,30 +30,25 @@
         <p>Marketing consent is separate from future WET Rewards participation. Unsubscribe at any time.</p>
       </div>
     </section>
-    <div class="wet-footer__main">
-      <div class="wet-footer__brand">
-        {% if section.settings.logo != blank %}
-          {{ section.settings.logo | image_url: width: 700 | image_tag: widths: '280, 440, 700', width: 220, loading: 'lazy', alt: 'WET Spa and Sauna' }}
-        {% endif %}
-        <p>Brisbane's established men's spa, sauna and social venue. Bold, welcoming, discreet and unapologetically adult.</p>
-        <div class="wet-actions"><a class="wet-button" href="/pages/pricing-entry">Plan your visit</a><a class="wet-button wet-button--outline" href="/pages/contact">Directions</a></div>
-      </div>
-      <nav class="wet-footer__column" aria-label="Footer navigation">
-        <h3>Explore</h3>
-        <a href="/pages/events">Events</a><a href="/pages/gallery">Facilities</a><a href="/pages/first-timers">First visit</a><a href="/pages/food-drink">Food &amp; drink</a><a href="/pages/from-the-team">From the team</a><a href="/pages/pricing-entry">Pricing &amp; entry</a><a href="/pages/faq">FAQ</a><a href="/pages/sexual-health-clinic">Health &amp; safety</a>
-      </nav>
-      <div class="wet-footer__column">
-        <h3>Visit</h3>
-        <p>22 Jeays Street<br>Bowen Hills QLD 4006</p>
-        <a href="tel:+61738541383">07 3854 1383</a><a href="mailto:wetspa@wet.com.au">wetspa@wet.com.au</a>
-        <p>Mon-Thu 11am-11pm<br>Fri-Sat 11am-2am<br>Sun 11am-11pm</p>
-      </div>
+
+    <div class="wet-footer__bottom">
+      <span>© {{ 'now' | date: '%Y' }} WET Spa &amp; Sauna</span>
+      <span>Adults 18+ - physical photo ID required</span>
+      <span>Card transactions appear as Bowen Hills Gym</span>
+      <a class="wet-footer__credit" href="https://martinenterprises.tech" target="_blank" rel="noopener noreferrer">Powered by Martin Tech Enterprises</a>
     </div>
-    <div class="wet-footer__bottom"><span>© {{ 'now' | date: '%Y' }} WET Spa &amp; Sauna</span><span>Adults 18+ - physical photo ID required</span><span>Card transactions appear as Bowen Hills Gym</span><a class="wet-footer__credit" href="https://martinenterprises.tech" target="_blank" rel="noopener noreferrer">Powered by Martin Tech Enterprises</a></div>
   </div>
   <span class="wet-curve wet-curve--red" aria-hidden="true"></span>
 </footer>
 
+{% stylesheet %}
+.wet-footer__visit{position:relative;isolation:isolate;overflow:hidden;border-bottom:1px solid var(--wet-line);background:linear-gradient(102deg,#050506 0%,#170609 50%,#050506 100%)}
+.wet-footer__visit-texture{position:absolute;z-index:-1;inset:0;opacity:.45;background:repeating-linear-gradient(100deg,transparent 0 3px,rgba(215,17,42,.07) 4px,transparent 7px),radial-gradient(ellipse at 50% 115%,rgba(215,17,42,.3),transparent 60%)}
+.wet-footer__visit:before,.wet-footer__visit:after{content:"";position:absolute;z-index:-1;right:-8%;left:-8%;height:100px;border-radius:50%;pointer-events:none}.wet-footer__visit:before{bottom:-82px;border-top:4px solid var(--wet-red);transform:rotate(-1.5deg)}.wet-footer__visit:after{bottom:-91px;border-top:1px solid rgba(196,199,204,.55);transform:rotate(-1deg)}
+.wet-footer__visit-inner{display:grid;justify-items:center;padding-block:clamp(62px,8vw,108px);text-align:center}.wet-footer__visit-inner>img{width:clamp(150px,17vw,230px);height:auto;margin:0 0 22px}.wet-footer__visit h2{margin:0 0 12px;font-family:var(--wet-display);font-size:clamp(48px,5.5vw,82px);font-weight:900;letter-spacing:-.04em;line-height:.84;text-transform:uppercase}.wet-footer__visit p{margin:0 0 30px;color:var(--wet-silver);font-size:11px;font-weight:900;letter-spacing:.12em;line-height:1.7;text-transform:uppercase}.wet-footer__visit p span{margin:0 13px;color:var(--wet-red)}.wet-footer__visit .wet-button{min-width:270px}.wet-footer__visit .wet-button span{margin-left:18px;font-size:20px}.wet-footer__signup{border-bottom:0}.wet-footer__bottom{position:relative;z-index:2}
+@media(max-width:800px){.wet-footer__visit-inner>img{width:170px}.wet-footer__visit p{max-width:330px}.wet-footer__visit p span{margin-inline:6px}.wet-footer__visit .wet-button{min-width:0}.wet-footer__signup{padding-bottom:72px}.wet-footer__bottom{padding-bottom:58px}}
+{% endstylesheet %}
+
 {% schema %}
-{"name":"WET brand footer","settings":[{"type":"image_picker","id":"logo","label":"Logo"}]}
+{"name":"WET brand footer","settings":[]}
 {% endschema %}
