@@ -1,0 +1,43 @@
+{
+  "type": "custom.popups",
+  "name": "Popups",
+  "sections": {
+    "newsletter-popup": {
+      "type": "newsletter-popup",
+      "disabled": true,
+      "settings": {
+        "disable_for_account_holders": true,
+        "popup_seconds": 5,
+        "popup_days": 30,
+        "popup_title": "",
+        "popup_text": "",
+        "image_position": "left",
+        "color_scheme": "3",
+        "show_social_icons": false,
+        "enable_newsletter": false,
+        "button_label": "",
+        "button_link": ""
+      }
+    },
+    "age-verification-popup": {
+      "type": "age-verification-popup",
+      "settings": {
+        "enable_test_mode": false,
+        "color_scheme": "none",
+        "image": "",
+        "blur_image": false,
+        "heading": "Adults only.",
+        "text": "<p>WET is a licensed adults-only venue. You must be 18 or older and present current physical photo ID on arrival. Please confirm your age to continue.</p>",
+        "decline_button_label": "No — exit",
+        "approve_button_label": "Yes — I’m 18 or older",
+        "decline_heading": "You must be 18 or older.",
+        "decline_text": "<p>WET is a licensed adults-only venue. Entry and website access are available only to visitors aged 18 years or older.</p>",
+        "return_button_label": "Return to age confirmation"
+      }
+    }
+  },
+  "order": [
+    "newsletter-popup",
+    "age-verification-popup"
+  ]
+}
