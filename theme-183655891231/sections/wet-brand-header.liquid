@@ -26,21 +26,26 @@
     </button>
   </div>
   <div class="wet-menu" id="WetMenu" aria-hidden="true" data-wet-menu>
-    <nav aria-label="Mobile navigation">
-      <a data-wet-nav href="/pages/pricing-entry"><span>01</span>Visit WET</a>
-      <a data-wet-nav href="/pages/events"><span>02</span>Events</a>
-      <a data-wet-nav href="/pages/gallery"><span>03</span>Facilities</a>
-      <a data-wet-nav href="/pages/first-timers"><span>04</span>First visit</a>
-      <a data-wet-nav href="/pages/food-drink"><span>05</span>Food &amp; drink</a>
-      <a data-wet-nav href="/pages/from-the-team"><span>06</span>From the team</a>
-      <a data-wet-nav href="/pages/sexual-health-clinic"><span>07</span>Health &amp; safety</a>
-      <a data-wet-nav href="/pages/faq"><span>08</span>FAQ</a>
-      <a data-wet-nav href="/pages/contact"><span>09</span>Contact</a>
-    </nav>
+    <div class="wet-menu__main">
+      <p class="wet-menu__kicker">Explore WET</p>
+      <nav aria-label="Mobile navigation">
+        <a data-wet-nav href="/pages/pricing-entry"><span>01</span>Visit WET</a>
+        <a data-wet-nav href="/pages/events"><span>02</span>Events</a>
+        <a data-wet-nav href="/pages/gallery"><span>03</span>Facilities</a>
+        <a data-wet-nav href="/pages/first-timers"><span>04</span>First visit</a>
+        <a data-wet-nav href="/pages/food-drink"><span>05</span>Food &amp; drink</a>
+        <a data-wet-nav href="/pages/from-the-team"><span>06</span>From the team</a>
+        <a data-wet-nav href="/pages/sexual-health-clinic"><span>07</span>Health &amp; safety</a>
+        <a data-wet-nav href="/pages/faq"><span>08</span>FAQ</a>
+        <a data-wet-nav href="/pages/contact"><span>09</span>Contact</a>
+      </nav>
+    </div>
     <div class="wet-menu__meta">
+      <span>Visit WET</span>
       <p>22 Jeays Street, Bowen Hills QLD 4006</p>
       <a href="tel:+61738541383">07 3854 1383</a>
       <p>Adults 18+ - current physical photo ID required</p>
+      <a class="wet-menu__direction" href="/pages/contact">Directions &amp; contact</a>
     </div>
   </div>
 </header>
@@ -133,12 +138,14 @@ body.wet-menu-open{overflow:hidden}
 .wet-header__toggle span{display:block;width:26px;height:2px;margin:7px auto;background:currentColor;transition:transform .25s ease}
 .wet-header__toggle[aria-expanded="true"] span:first-child{transform:translateY(4.5px) rotate(45deg)}
 .wet-header__toggle[aria-expanded="true"] span:last-child{transform:translateY(-4.5px) rotate(-45deg)}
-.wet-menu{position:fixed;z-index:-1;inset:0;width:100%;height:100dvh;min-height:100vh;display:grid;grid-template-columns:1fr minmax(280px,.34fr);gap:80px;padding:160px var(--wet-gutter) 70px;background:var(--wet-black);overflow-y:auto;overscroll-behavior:contain;opacity:0;visibility:hidden;transform:translateY(-16px);transition:opacity .24s ease,visibility .24s ease,transform .24s ease}
+.wet-menu{position:fixed;z-index:-1;inset:0;width:100%;height:100dvh;min-height:100vh;display:grid;grid-template-columns:minmax(0,1fr) minmax(270px,360px);gap:clamp(44px,7vw,110px);align-items:center;padding:clamp(146px,16vh,190px) var(--wet-gutter) 52px;background:radial-gradient(circle at 82% 64%,rgba(215,17,42,.09),transparent 29%),linear-gradient(118deg,#050506 0 67%,#09090a 67%);overflow-y:auto;overscroll-behavior:contain;opacity:0;visibility:hidden;transform:translateY(-16px);transition:opacity .24s ease,visibility .24s ease,transform .24s ease}
 .wet-menu.is-open{z-index:1;opacity:1;visibility:visible;transform:none}
-.wet-menu nav{display:grid;align-content:center}
-.wet-menu nav a{display:grid;grid-template-columns:45px 1fr;gap:18px;align-items:center;padding:11px 0;border-bottom:1px solid var(--wet-line);font-family:var(--wet-display);font-size:clamp(42px,7vw,92px);font-weight:900;letter-spacing:-.035em;line-height:.9;text-transform:uppercase}
+.wet-menu__main{min-width:0;align-self:center}.wet-menu__kicker{display:flex;align-items:center;gap:13px;margin:0 0 22px;color:var(--wet-silver);font-size:10px;font-weight:900;letter-spacing:.19em;text-transform:uppercase}.wet-menu__kicker:before{content:"";width:38px;height:3px;background:var(--wet-red)}
+.wet-menu nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(34px,5vw,76px);align-content:center;border-top:1px solid var(--wet-line)}
+.wet-menu nav a{display:grid;grid-template-columns:30px minmax(0,1fr);gap:14px;align-items:center;min-width:0;padding:15px 0;border-bottom:1px solid var(--wet-line);font-family:var(--wet-display);font-size:clamp(32px,3.15vw,50px);font-weight:900;letter-spacing:-.025em;line-height:.92;text-transform:uppercase;transition:color .2s ease,padding .2s ease}
 .wet-menu nav a span{color:var(--wet-red);font-family:var(--wet-body);font-size:10px;letter-spacing:.12em}
-.wet-menu__meta{display:grid;align-content:end;gap:14px;color:var(--wet-muted);font-size:13px;line-height:1.5}
+.wet-menu nav a:hover,.wet-menu nav a:focus-visible{padding-left:9px;color:#fff}.wet-menu nav a[aria-current="page"]{color:#fff}.wet-menu nav a[aria-current="page"]:after{content:"";width:7px;height:7px;margin-left:auto;border-radius:50%;background:var(--wet-red)}
+.wet-menu__meta{display:grid;align-content:start;gap:16px;padding:34px;border:1px solid var(--wet-line);border-radius:12px;background:rgba(5,5,6,.72);color:var(--wet-muted);font-size:13px;line-height:1.5}.wet-menu__meta>span{margin-bottom:12px;padding-bottom:16px;border-bottom:1px solid var(--wet-line);color:var(--wet-silver);font-size:10px;font-weight:900;letter-spacing:.18em;text-transform:uppercase}.wet-menu__meta>a:not(.wet-menu__direction){color:var(--wet-white);font-family:var(--wet-display);font-size:30px;font-weight:900;letter-spacing:-.02em}.wet-menu__direction{min-height:50px;display:flex;align-items:center;justify-content:center;margin-top:12px;border:1px solid var(--wet-red);background:var(--wet-red);color:#fff!important;font-size:10px;font-weight:900;letter-spacing:.13em;text-transform:uppercase}
 .wet-footer{position:relative;border-top:1px solid var(--wet-line);background:#030304;overflow:hidden}
 .wet-footer__signup{display:grid;grid-template-columns:minmax(0,.85fr) minmax(320px,1.15fr);gap:80px;align-items:end;padding-block:clamp(68px,9vw,120px);border-bottom:1px solid var(--wet-line)}
 .wet-footer__signup h2{margin-top:22px;font-family:var(--wet-display);font-size:clamp(48px,6.5vw,92px);font-weight:900;letter-spacing:-.04em;line-height:.85;text-transform:uppercase}
@@ -170,9 +177,10 @@ age-verification-popup .color-scheme-reversed{border:1px solid rgba(196,199,204,
 [data-wet-reveal]{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease}
 [data-wet-reveal].is-visible{opacity:1;transform:none}
 @media(max-width:1180px){.wet-header__bar{grid-template-columns:1fr auto}.wet-header__nav,.wet-header__contact{display:none}.wet-header__toggle{display:block}.wet-page-hero__content,.wet-section__head{grid-template-columns:1fr;gap:34px}.wet-page-hero__aside,.wet-section__aside{justify-self:start;max-width:650px}.wet-grid-3{grid-template-columns:1fr 1fr}.wet-footer__main{grid-template-columns:1fr 1fr}.wet-footer__brand{grid-column:1/-1}.wet-stats{grid-template-columns:1fr 1fr}.wet-stat:nth-child(2){border-right:0}.wet-stat:nth-child(-n+2){border-bottom:1px solid var(--wet-line)}}
-@media(max-width:1000px){.wet-menu{grid-template-columns:1fr;padding-top:150px}.wet-menu__meta{display:none}.wet-menu nav a{font-size:clamp(44px,7vw,66px)}}
-@media(max-width:800px){:root{--wet-gutter:22px}.wet-header__event{justify-content:space-between;gap:10px;font-size:8px}.wet-header__bar{min-height:72px}.wet-header__logo,.wet-header__logo img{width:116px}.wet-page{padding-top:106px}.wet-menu{grid-template-columns:1fr;padding-top:132px}.wet-menu__meta{display:none}.wet-grid-2,.wet-grid-3{grid-template-columns:1fr}.wet-footer__main{grid-template-columns:1fr;gap:44px}.wet-footer__brand{grid-column:auto}.wet-newsletter__row{grid-template-columns:1fr}.wet-newsletter button{justify-self:start;padding:0}.wet-page-hero{min-height:590px}.wet-page-hero__veil{background:linear-gradient(180deg,rgba(4,4,5,.15),rgba(4,4,5,.92) 70%,var(--wet-black))}.wet-page-hero__content{padding-block:82px 48px}.wet-display{font-size:clamp(62px,18vw,90px)}.wet-title{font-size:clamp(43px,12.5vw,62px)}.wet-section{padding-block:68px}.wet-button{width:100%}.wet-card__eyebrow,.wet-card__icon{margin-bottom:26px}age-verification-popup .modal__centered-content{padding:34px 24px!important}age-verification-popup h2{font-size:50px!important}}
-@media(max-width:520px){.wet-stats{grid-template-columns:1fr}.wet-stat{border-right:0;border-bottom:1px solid var(--wet-line)}.wet-stat:last-child{border-bottom:0}.wet-menu nav a{font-size:45px}.wet-footer__brand img{width:180px}}
+@media(max-width:1000px){.wet-menu{grid-template-columns:1fr;align-items:start;padding-top:140px;padding-bottom:36px;background:radial-gradient(circle at 88% 70%,rgba(215,17,42,.075),transparent 34%),var(--wet-black)}.wet-menu__meta{display:none}.wet-menu nav a{font-size:clamp(31px,4.6vw,44px)}}
+@media(max-width:800px){:root{--wet-gutter:22px}.wet-header__event{justify-content:space-between;gap:10px;font-size:8px}.wet-header__bar{min-height:72px}.wet-header__logo,.wet-header__logo img{width:116px}.wet-page{padding-top:106px}.wet-menu{grid-template-columns:1fr;padding-top:126px}.wet-menu__meta{display:none}.wet-grid-2,.wet-grid-3{grid-template-columns:1fr}.wet-footer__main{grid-template-columns:1fr;gap:44px}.wet-footer__brand{grid-column:auto}.wet-newsletter__row{grid-template-columns:1fr}.wet-newsletter button{justify-self:start;padding:0}.wet-page-hero{min-height:590px}.wet-page-hero__veil{background:linear-gradient(180deg,rgba(4,4,5,.15),rgba(4,4,5,.92) 70%,var(--wet-black))}.wet-page-hero__content{padding-block:82px 48px}.wet-display{font-size:clamp(62px,18vw,90px)}.wet-title{font-size:clamp(43px,12.5vw,62px)}.wet-section{padding-block:68px}.wet-button{width:100%}.wet-card__eyebrow,.wet-card__icon{margin-bottom:26px}age-verification-popup .modal__centered-content{padding:34px 24px!important}age-verification-popup h2{font-size:50px!important}}
+@media(max-width:680px){.wet-menu__kicker{margin-bottom:14px}.wet-menu nav{grid-template-columns:1fr}.wet-menu nav a{grid-template-columns:27px minmax(0,1fr);gap:11px;padding:10px 0;font-size:clamp(31px,9.2vw,39px)}}
+@media(max-width:520px){.wet-stats{grid-template-columns:1fr}.wet-stat{border-right:0;border-bottom:1px solid var(--wet-line)}.wet-stat:last-child{border-bottom:0}.wet-footer__brand img{width:180px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.wet *,.wet-header *{animation:none!important;transition:none!important}[data-wet-reveal]{opacity:1;transform:none}}
 {% endstylesheet %}
 
