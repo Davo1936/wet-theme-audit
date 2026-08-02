@@ -1,0 +1,51 @@
+{% liquid
+  assign wet_icon_name = name | default: 'spark'
+%}
+<svg class="wet-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+  {% case wet_icon_name %}
+    {% when 'id' %}
+      <rect x="9" y="14" width="46" height="36" rx="5"/><circle cx="23" cy="30" r="6"/><path d="M14 44c2-6 5-9 9-9s7 3 9 9M36 25h13M36 33h13M36 41h9"/>
+    {% when 'reception' %}
+      <path d="M10 47h44M15 47V30h34v17M20 30l5-10h14l5 10M24 38h16"/><circle cx="32" cy="14" r="4"/>
+    {% when 'locker' %}
+      <rect x="15" y="8" width="34" height="48" rx="4"/><path d="M32 8v48M22 18h5M37 18h5M24 33h3M37 33h3"/>
+    {% when 'compass' %}
+      <circle cx="32" cy="32" r="24"/><path d="m40 24-5 11-11 5 5-11 11-5Z"/>
+    {% when 'towel' %}
+      <path d="M15 17h27a8 8 0 0 1 0 16H21a6 6 0 0 0-6 6v8a7 7 0 0 0 7 7h25V33"/><path d="M22 42h25M22 48h25"/>
+    {% when 'shield' %}
+      <path d="M32 7c7 6 14 8 21 8v15c0 13-8 22-21 27C19 52 11 43 11 30V15c7 0 14-2 21-8Z"/><path d="m22 32 7 7 14-16"/>
+    {% when 'pool' %}
+      <path d="M10 24c5 0 5-4 10-4s5 4 10 4 5-4 10-4 5 4 10 4M10 34c5 0 5-4 10-4s5 4 10 4 5-4 10-4 5 4 10 4M10 44c5 0 5-4 10-4s5 4 10 4 5-4 10-4 5 4 10 4"/>
+    {% when 'heat' %}
+      <path d="M18 49c-8-11 3-16 1-28 9 6 9 13 8 18 3-2 6-7 6-13 10 8 15 16 13 24-2 8-9 12-15 12-8 0-13-5-13-13Z"/><path d="M30 52c-4-5 2-8 2-14 5 4 8 8 6 14-1 4-6 7-8 0Z"/>
+    {% when 'lounge' %}
+      <path d="M13 34h38a6 6 0 0 1 6 6v10H7V40a6 6 0 0 1 6-6Z"/><path d="M14 34V23a7 7 0 0 1 7-7h22a7 7 0 0 1 7 7v11M12 50v6M52 50v6"/>
+    {% when 'calendar' %}
+      <rect x="10" y="14" width="44" height="40" rx="5"/><path d="M10 25h44M21 8v12M43 8v12M21 34h8M35 34h8M21 43h8M35 43h8"/>
+    {% when 'ticket' %}
+      <path d="M8 23a7 7 0 0 0 0 14v9h48v-9a7 7 0 0 0 0-14v-9H8v9Z"/><path d="M32 17v6M32 31v5M32 44v6"/>
+    {% when 'qr' %}
+      <path d="M10 10h17v17H10zM37 10h17v17H37zM10 37h17v17H10zM40 39h6v6h-6zM49 37h5v8M37 49h8v5M49 49h5v5"/><path d="M16 16h5v5h-5zM43 16h5v5h-5zM16 43h5v5h-5z"/>
+    {% when 'fees' %}
+      <circle cx="32" cy="32" r="23"/><path d="M39 23c-2-2-5-3-8-3-5 0-8 2-8 6 0 9 18 4 18 13 0 4-4 7-9 7-4 0-8-2-10-4M32 15v34"/>
+    {% when 'health' %}
+      <path d="M25 9h14v13h13v14H39v13H25V36H12V22h13V9Z"/>
+    {% when 'test' %}
+      <path d="M24 9h16M28 9v15L14 48a5 5 0 0 0 4 7h28a5 5 0 0 0 4-7L36 24V9"/><path d="M20 43h24M25 36h14"/>
+    {% when 'info' %}
+      <circle cx="32" cy="32" r="24"/><path d="M32 28v17"/><circle cx="32" cy="20" r="2" fill="currentColor" stroke="none"/>
+    {% when 'food' %}
+      <path d="M18 8v19M12 8v12c0 5 3 7 6 7s6-2 6-7V8M18 27v29M43 8c-7 10-7 23 0 26v22M43 8v26h9"/>
+    {% when 'coffee' %}
+      <path d="M12 21h33v20a12 12 0 0 1-12 12h-9a12 12 0 0 1-12-12V21Z"/><path d="M45 27h4a8 8 0 0 1 0 16h-5M21 8v7M31 8v7M41 8v7"/>
+    {% when 'drink' %}
+      <path d="M16 9h32l-4 46H20L16 9Z"/><path d="M18 22h28M28 22l11-15"/>
+    {% when 'beer' %}
+      <path d="M15 13h30v42H15zM45 22h5a7 7 0 0 1 7 7v13a7 7 0 0 1-7 7h-5M21 21v25M30 21v25M39 21v25"/>
+    {% when 'arrow' %}
+      <path d="M11 32h40M38 19l13 13-13 13"/>
+    {% else %}
+      <path d="m32 7 6 17 18 1-14 11 5 18-15-10-15 10 5-18L8 25l18-1 6-17Z"/>
+  {% endcase %}
+</svg>
