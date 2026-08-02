@@ -29,15 +29,15 @@
     <div class="wet-menu__main">
       <p class="wet-menu__kicker">Explore WET</p>
       <nav aria-label="Mobile navigation">
-        <a data-wet-nav href="/pages/pricing-entry"><span>01</span>Visit WET</a>
-        <a data-wet-nav href="/pages/events"><span>02</span>Events</a>
-        <a data-wet-nav href="/pages/gallery"><span>03</span>Facilities</a>
-        <a data-wet-nav href="/pages/first-timers"><span>04</span>First visit</a>
-        <a data-wet-nav href="/pages/food-drink"><span>05</span>Food &amp; drink</a>
-        <a data-wet-nav href="/pages/from-the-team"><span>06</span>From the team</a>
-        <a data-wet-nav href="/pages/sexual-health-clinic"><span>07</span>Health &amp; safety</a>
-        <a data-wet-nav href="/pages/faq"><span>08</span>FAQ</a>
-        <a data-wet-nav href="/pages/contact"><span>09</span>Contact</a>
+        <a data-wet-nav href="/pages/pricing-entry"><span class="wet-menu__icon">{% render 'wet-icon', name: 'compass' %}</span>Visit WET</a>
+        <a data-wet-nav href="/pages/events"><span class="wet-menu__icon">{% render 'wet-icon', name: 'calendar' %}</span>Events</a>
+        <a data-wet-nav href="/pages/gallery"><span class="wet-menu__icon">{% render 'wet-icon', name: 'pool' %}</span>Facilities</a>
+        <a data-wet-nav href="/pages/first-timers"><span class="wet-menu__icon">{% render 'wet-icon', name: 'id' %}</span>First visit</a>
+        <a data-wet-nav href="/pages/food-drink"><span class="wet-menu__icon">{% render 'wet-icon', name: 'food' %}</span>Food &amp; drink</a>
+        <a data-wet-nav href="/pages/from-the-team"><span class="wet-menu__icon">{% render 'wet-icon', name: 'team' %}</span>From the team</a>
+        <a data-wet-nav href="/pages/sexual-health-clinic"><span class="wet-menu__icon">{% render 'wet-icon', name: 'health' %}</span>Health &amp; safety</a>
+        <a data-wet-nav href="/pages/faq"><span class="wet-menu__icon">{% render 'wet-icon', name: 'faq' %}</span>FAQ</a>
+        <a data-wet-nav href="/pages/contact"><span class="wet-menu__icon">{% render 'wet-icon', name: 'location' %}</span>Contact</a>
       </nav>
     </div>
     <div class="wet-menu__meta">
@@ -142,8 +142,8 @@ body.wet-menu-open{overflow:hidden}
 .wet-menu.is-open{z-index:1;opacity:1;visibility:visible;transform:none}
 .wet-menu__main{min-width:0;align-self:center}.wet-menu__kicker{display:flex;align-items:center;gap:13px;margin:0 0 22px;color:var(--wet-silver);font-size:10px;font-weight:900;letter-spacing:.19em;text-transform:uppercase}.wet-menu__kicker:before{content:"";width:38px;height:3px;background:var(--wet-red)}
 .wet-menu nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(34px,5vw,76px);align-content:center;border-top:1px solid var(--wet-line)}
-.wet-menu nav a{display:grid;grid-template-columns:30px minmax(0,1fr);gap:14px;align-items:center;min-width:0;padding:15px 0;border-bottom:1px solid var(--wet-line);font-family:var(--wet-display);font-size:clamp(32px,3.15vw,50px);font-weight:900;letter-spacing:-.025em;line-height:.92;text-transform:uppercase;transition:color .2s ease,padding .2s ease}
-.wet-menu nav a span{color:var(--wet-red);font-family:var(--wet-body);font-size:10px;letter-spacing:.12em}
+.wet-menu nav a{display:grid;grid-template-columns:42px minmax(0,1fr);gap:16px;align-items:center;min-width:0;padding:15px 0;border-bottom:1px solid var(--wet-line);font-family:var(--wet-display);font-size:clamp(32px,3.15vw,50px);font-weight:900;letter-spacing:-.025em;line-height:.92;text-transform:uppercase;transition:color .2s ease,padding .2s ease}
+.wet-menu__icon{display:grid;width:38px;height:38px;place-items:center;border-radius:50%;background:linear-gradient(145deg,#17181b,#090a0b);color:var(--wet-red);box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}.wet-menu__icon .wet-icon{width:22px;height:22px}
 .wet-menu nav a:hover,.wet-menu nav a:focus-visible{padding-left:9px;color:#fff}.wet-menu nav a[aria-current="page"]{color:#fff}.wet-menu nav a[aria-current="page"]:after{content:"";width:7px;height:7px;margin-left:auto;border-radius:50%;background:var(--wet-red)}
 .wet-menu__meta{display:grid;align-content:start;gap:16px;padding:34px;border:1px solid var(--wet-line);border-radius:12px;background:rgba(5,5,6,.72);color:var(--wet-muted);font-size:13px;line-height:1.5}.wet-menu__meta>span{margin-bottom:12px;padding-bottom:16px;border-bottom:1px solid var(--wet-line);color:var(--wet-silver);font-size:10px;font-weight:900;letter-spacing:.18em;text-transform:uppercase}.wet-menu__meta>a:not(.wet-menu__direction){color:var(--wet-white);font-family:var(--wet-display);font-size:30px;font-weight:900;letter-spacing:-.02em}.wet-menu__direction{min-height:50px;display:flex;align-items:center;justify-content:center;margin-top:12px;border:1px solid var(--wet-red);background:var(--wet-red);color:#fff!important;font-size:10px;font-weight:900;letter-spacing:.13em;text-transform:uppercase}
 .wet-footer{position:relative;border-top:1px solid var(--wet-line);background:#030304;overflow:hidden}
@@ -179,7 +179,7 @@ age-verification-popup .color-scheme-reversed{border:1px solid rgba(196,199,204,
 @media(max-width:1180px){.wet-header__bar{grid-template-columns:1fr auto}.wet-header__nav,.wet-header__contact{display:none}.wet-header__toggle{display:block}.wet-page-hero__content,.wet-section__head{grid-template-columns:1fr;gap:34px}.wet-page-hero__aside,.wet-section__aside{justify-self:start;max-width:650px}.wet-grid-3{grid-template-columns:1fr 1fr}.wet-footer__main{grid-template-columns:1fr 1fr}.wet-footer__brand{grid-column:1/-1}.wet-stats{grid-template-columns:1fr 1fr}.wet-stat:nth-child(2){border-right:0}.wet-stat:nth-child(-n+2){border-bottom:1px solid var(--wet-line)}}
 @media(max-width:1000px){.wet-menu{grid-template-columns:1fr;align-items:start;padding-top:140px;padding-bottom:36px;background:radial-gradient(circle at 88% 70%,rgba(215,17,42,.075),transparent 34%),var(--wet-black)}.wet-menu__meta{display:none}.wet-menu nav a{font-size:clamp(31px,4.6vw,44px)}}
 @media(max-width:800px){:root{--wet-gutter:22px}.wet-header__event{justify-content:space-between;gap:10px;font-size:8px}.wet-header__bar{min-height:72px}.wet-header__logo,.wet-header__logo img{width:116px}.wet-page{padding-top:106px}.wet-menu{grid-template-columns:1fr;padding-top:126px}.wet-menu__meta{display:none}.wet-grid-2,.wet-grid-3{grid-template-columns:1fr}.wet-footer__main{grid-template-columns:1fr;gap:44px}.wet-footer__brand{grid-column:auto}.wet-newsletter__row{grid-template-columns:1fr}.wet-newsletter button{justify-self:start;padding:0}.wet-page-hero{min-height:590px}.wet-page-hero__veil{background:linear-gradient(180deg,rgba(4,4,5,.15),rgba(4,4,5,.92) 70%,var(--wet-black))}.wet-page-hero__content{padding-block:82px 48px}.wet-display{font-size:clamp(62px,18vw,90px)}.wet-title{font-size:clamp(43px,12.5vw,62px)}.wet-section{padding-block:68px}.wet-button{width:100%}.wet-card__eyebrow,.wet-card__icon{margin-bottom:26px}age-verification-popup .modal__centered-content{padding:34px 24px!important}age-verification-popup h2{font-size:50px!important}}
-@media(max-width:680px){.wet-menu__kicker{margin-bottom:14px}.wet-menu nav{grid-template-columns:1fr}.wet-menu nav a{grid-template-columns:27px minmax(0,1fr);gap:11px;padding:10px 0;font-size:clamp(31px,9.2vw,39px)}}
+@media(max-width:680px){.wet-menu__kicker{margin-bottom:14px}.wet-menu nav{grid-template-columns:1fr}.wet-menu nav a{grid-template-columns:35px minmax(0,1fr);gap:12px;padding:9px 0;font-size:clamp(29px,8.5vw,36px)}.wet-menu__icon{width:32px;height:32px}.wet-menu__icon .wet-icon{width:19px;height:19px}}
 @media(max-width:520px){.wet-stats{grid-template-columns:1fr}.wet-stat{border-right:0;border-bottom:1px solid var(--wet-line)}.wet-stat:last-child{border-bottom:0}.wet-footer__brand img{width:180px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.wet *,.wet-header *{animation:none!important;transition:none!important}[data-wet-reveal]{opacity:1;transform:none}}
 {% endstylesheet %}
